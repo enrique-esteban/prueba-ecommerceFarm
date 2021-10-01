@@ -16,8 +16,42 @@
 {% endblock %}
 
 {% block body %}
-  <div class="example-wrapper">
+  <div class="container">
     <h1>Servicio de notificaciones</h1>
     <hr>
+    <div class="row">
+      <div class="col-sm">
+
+        <div class="list-group">
+          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">ID</h5>
+            </div>
+            <p class="mb-1">{{ user.id }}</p>
+          </a>
+
+          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">EMAIL</h5>
+            </div>
+            <p class="mb-1">{{ user.email }}</p>
+          </a>
+
+          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">MESSAGE</h5>
+            </div>
+            <p class="mb-1">{{ message }}</p>
+          </a>
+
+          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">RESULT</h5>
+            </div>
+            <p class="mb-1">{{ result ? 'true' : 'false' }}</p>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 {% endblock %}

@@ -1,11 +1,11 @@
-# index:
-#   path: /
-#   controller: App\Controller\SiteController::index
+index:
+  path: /
+  controller: App\Controller\SiteController::sendNotification
+  defaults:
+    id: 0
 
 notification-service:
   path: /users/send_notification/{id}
   controller: App\Controller\SiteController::sendNotification
-  defaults:
-    id: 1
   requirements:
     id: '\d+'

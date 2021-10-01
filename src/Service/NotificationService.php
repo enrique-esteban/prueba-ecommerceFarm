@@ -32,10 +32,10 @@ class NotificationService
 
             switch ($provider) {
                 case "SMTP":
-                    $this->smtpProvider->send($user->getEmail(), $message);
+                    return $this->smtpProvider->send($user->getEmail(), $message);
                     break;
                 case "SES":
-                    $this->sesProvider->send($user->getEmail(), $message);
+                    return $this->sesProvider->send($user->getEmail(), $message);
                     break; 
                 default: // TODO: Mejorar el manejador de errores
                     throw new Exception("Proveedor incorrecto");

@@ -9,43 +9,50 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
 
 use App\Service\NotificationService;
+use App\Util\Utils;
 
 class SiteController extends AbstractController
 {
     private $notificationSrv;
+    private $utils;
 
-    public function __construct(NotificationService $notificationSrv) 
+    public function __construct(NotificationService $notificationSrv, Utils $utils) 
     {
+        // Añadimos la dependencia al servidor de notificaciones, debido a que la opción
+        //   autowire está a true se cargará automaticamente como servicio.
         $this->notificationSrv = $notificationSrv;
+        $this->utils = $utils;
     }
-
-    /**
-     * Carga la página de inicio.
-     */
-    // public function index(): Response
-    // {
-    //     //return $this->render('index.html.twig');
-    // }
 
     /**
      * Envia una mensaje y el usuario actualmente logueado al servicio de notificacines 
      */
     public function sendNotification($id): Response
     {
-        // Creando un usuario falso
+        // TODO: Creando un usuario falso
         $mobUser = new User();
-        $mobUser->setId($id);
-        $mobUser->setUsername("enrique");
-        $mobUser->setEmail("ense.esteban@gmail.com");
+        $mobUser->getMobUser();
         dump($mobUser);
 
-        // Generamos un texto aleatorio
-        $rndTxt = $this->getRndText(14) . '.';
+        // TODO: Generamos un texto aleatorio
+        $rndTxt = $this->utils->getRndText(14) . '.';
         dump($rndTxt);
 
-        $this->notificationSrv->notify($mobUser, $rndTxt);
+        // TODO: Hacer la comprobación en la sesión actual.
+        //   Por lo pronto se usará el mobUser creado un poco más arriba
+        if ($mobUser->getId() != $id) {
+            throw new \Exception("El usuario logueado no se encuentra en la BD.");
+        }
 
-        return $this->render('front/notification.html.twig');
+        // Llamamos al servicio de notificaciones usando el provider SES y guardamos el
+        //   resultado en una variable
+        $result = $this->notificationSrv->notify($mobUser, $rndTxt, ['SMTP']);
+
+        return $this->render('front/notification.html.twig', [
+            'user' => $mobUser,
+            'message' => $rndTxt,
+            'result' => $result
+        ]);
     }
 
     /**

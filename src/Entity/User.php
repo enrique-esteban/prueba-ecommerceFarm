@@ -124,4 +124,16 @@ class User implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    /**
+     * Crea un usuario falso
+     */
+    public function getMobUser($id = 0, $userName = "user", $email = "user@mobuser.es")
+    {
+        $this->id = $id;
+        $this->userName = $userName;
+        $this->email = $email;
+
+        return $this;
+    }
 }
